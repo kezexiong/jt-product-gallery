@@ -1,0 +1,339 @@
+/* 产品详情页样式 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-red: #E60012;
+    --primary-blue: #3A8ABD;
+    --text-dark: #333333;
+    --text-gray: #666666;
+    --text-light: #999999;
+    --bg-gray: #F5F5F5;
+    --border-gray: #EEEEEE;
+    --price-red: #E60012;
+}
+
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--bg-gray);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.app {
+    min-height: 100vh;
+    background-color: #fff;
+    max-width: 768px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* 顶部导航栏 */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-gray);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.back-btn,
+.share-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.back-btn:hover,
+.share-btn:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.back-btn svg,
+.share-btn svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-dark);
+}
+
+.page-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-dark);
+    flex: 1;
+    text-align: center;
+}
+
+/* 产品图片轮播 */
+.product-gallery {
+    background-color: #fff;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.gallery-main {
+    width: 100%;
+    aspect-ratio: 1;
+    background-color: var(--bg-gray);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.gallery-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.indicator.active {
+    background-color: var(--primary-blue);
+    width: 20px;
+    border-radius: 4px;
+}
+
+/* 产品信息 */
+.product-detail {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.product-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.product-price-bar {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-gray);
+}
+
+.price-symbol {
+    font-size: 16px;
+    color: var(--price-red);
+    font-weight: 600;
+}
+
+.price-value {
+    font-size: 28px;
+    color: var(--price-red);
+    font-weight: 700;
+}
+
+/* 产品元信息 */
+.product-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding: 16px;
+    background-color: var(--bg-gray);
+    border-radius: 8px;
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.meta-label {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.meta-value {
+    font-size: 14px;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+/* 产品描述 */
+.product-description {
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 4px solid var(--primary-blue);
+}
+
+.description-content {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.8;
+}
+
+.description-content p {
+    margin-bottom: 8px;
+}
+
+/* 图文详情 */
+.product-images {
+    margin-bottom: 24px;
+}
+
+.detail-images {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.detail-images img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* 底部占位 */
+.bottom-space {
+    height: 80px;
+}
+
+/* 返回顶部按钮 */
+.back-to-top {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary-red);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(230, 0, 18, 0.3);
+    transition: all 0.3s ease;
+    z-index: 99;
+}
+
+.back-to-top:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(230, 0, 18, 0.4);
+}
+
+.back-to-top::before {
+    content: '↑';
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+/* 回到首页按钮 */
+.back-to-home {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(230, 0, 18, 0.6);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    z-index: 99;
+    line-height: 1.2;
+}
+
+.back-to-home:hover {
+    background-color: rgba(230, 0, 18, 0.8);
+    transform: translateY(-2px);
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .header {
+        padding: 10px 12px;
+    }
+    
+    .page-title {
+        font-size: 16px;
+    }
+    
+    .product-gallery {
+        padding: 16px;
+    }
+    
+    .product-detail {
+        padding: 16px;
+    }
+    
+    .product-title {
+        font-size: 18px;
+    }
+    
+    .price-value {
+        font-size: 24px;
+    }
+    
+    .back-to-top,
+    .back-to-home {
+        width: 44px;
+        height: 44px;
+        right: 16px;
+    }
+    
+    .back-to-top {
+        bottom: 90px;
+    }
+    
+    .back-to-home {
+        bottom: 36px;
+    }
+}

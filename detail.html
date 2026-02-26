@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品详情页</title>
+    <link rel="stylesheet" href="detail.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <button class="back-btn" onclick="history.back()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+                </svg>
+            </button>
+            <h1 class="page-title">产品详情页</h1>
+            <button class="share-btn">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- 产品图片轮播 -->
+        <div class="product-gallery">
+            <div class="gallery-main">
+                <img id="mainImage" src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=600&fit=crop" alt="产品主图">
+            </div>
+            <div class="gallery-indicators">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+            </div>
+        </div>
+
+        <!-- 产品信息 -->
+        <div class="product-detail">
+            <h2 class="product-title">中粮 可益康蛋白粉礼盒500g*2</h2>
+            <div class="product-price-bar">
+                <span class="price-symbol">¥:</span>
+                <span class="price-value">328.00</span>
+            </div>
+            
+            <div class="product-meta">
+                <div class="meta-item">
+                    <span class="meta-label">品牌</span>
+                    <span class="meta-value">中粮</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">规格</span>
+                    <span class="meta-value">500g*2</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">产地</span>
+                    <span class="meta-value">中国</span>
+                </div>
+            </div>
+
+            <div class="product-description">
+                <h3 class="section-title">产品详情</h3>
+                <div class="description-content">
+                    <p>中粮可益康蛋白粉，精选优质乳清蛋白和大豆蛋白，科学配比，营养丰富。</p>
+                    <p>• 优质双蛋白配方，营养更均衡</p>
+                    <p>• 易溶解，口感细腻</p>
+                    <p>• 独立包装，方便携带</p>
+                    <p>• 适合全家人日常营养补充</p>
+                </div>
+            </div>
+
+            <div class="product-images">
+                <h3 class="section-title">图文详情</h3>
+                <div class="detail-images">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&h=800&fit=crop" alt="产品详情图1">
+                    <img src="https://images.unsplash.com/photo-1516684732162-798a0062be99?w=800&h=800&fit=crop" alt="产品详情图2">
+                    <img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=800&h=800&fit=crop" alt="产品详情图3">
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部占位 -->
+        <div class="bottom-space"></div>
+    </div>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="backToTop">
+        <span>返回</span>
+    </button>
+
+    <!-- 回到首页按钮 -->
+    <a href="index.html" class="back-to-home" id="backToHome">
+        <span>回到首页</span>
+    </a>
+
+    <script src="detail.js"></script>
+</body>
+</html>
