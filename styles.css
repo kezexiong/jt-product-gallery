@@ -6,8 +6,8 @@
 }
 
 :root {
-    --primary-blue: #3A8ABD;
-    --primary-blue-dark: #2C7AA5;
+    --primary-green: #07C160;
+    --primary-green-dark: #06AD56;
     --festival-red: #E60012;
     --gold: #FFD700;
     --bg-light: #F8F9FA;
@@ -32,140 +32,23 @@ body {
     flex-direction: column;
 }
 
-/* 轮播图区域 */
+/* Banner 区域 */
 .banner-section {
     width: 100%;
     background: #fff;
 }
 
-.carousel {
-    position: relative;
+.banner-static {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     overflow: hidden;
 }
 
-.carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.carousel-item {
-    min-width: 100%;
-    flex-shrink: 0;
-}
-
-.banner-dual {
-    display: flex;
-    height: 320px;
-}
-
-/* 左侧Banner - 插画风格 */
-.banner-left {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-.banner-bg-img {
+.banner-img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-}
-
-.banner-overlay-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 200, 150, 0.3) 0%, rgba(255, 180, 120, 0.2) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.banner-content {
-    text-align: center;
-    z-index: 2;
-}
-
-.banner-title-vertical {
-    font-size: 80px;
-    font-weight: 700;
-    color: #FFD700;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
-    writing-mode: vertical-rl;
-    letter-spacing: 15px;
-    margin-bottom: 20px;
-}
-
-.banner-subtitle-vertical {
-    font-size: 14px;
-    color: #8B4513;
-    writing-mode: vertical-rl;
-    letter-spacing: 6px;
-    line-height: 2;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
-}
-
-/* 右侧Banner - 实景风格 */
-.banner-right {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-.banner-overlay-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.3) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.banner-title-horizontal {
-    font-size: 72px;
-    font-weight: 700;
-    color: #FFD700;
-    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6);
-    letter-spacing: 20px;
-}
-
-/* 轮播指示器 */
-.carousel-indicators {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 12px;
-    z-index: 10;
-}
-
-.indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: var(--indicator-gray);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.indicator.active {
-    background-color: var(--primary-blue);
-    transform: scale(1.2);
-}
-
-.indicator:hover {
-    background-color: var(--primary-blue-dark);
+    height: auto;
+    display: block;
 }
 
 /* 主内容区域 */
@@ -182,7 +65,7 @@ body {
 /* 左侧边栏 */
 .sidebar {
     width: 200px;
-    background-color: var(--primary-blue);
+    background-color: var(--primary-green);
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -214,11 +97,11 @@ body {
 }
 
 .category-item:hover {
-    background-color: var(--primary-blue-dark);
+    background-color: var(--primary-green-dark);
 }
 
 .category-item.active {
-    background-color: var(--primary-blue-dark);
+    background-color: var(--primary-green-dark);
     border-left-color: var(--gold);
     font-weight: 600;
 }

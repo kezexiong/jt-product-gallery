@@ -1,0 +1,22 @@
+You are Codex (gpt-5.3-codex).
+Project: A static product catalog website.
+Workdir contains: index.html, styles.css, script.js, detail.html, detail.css, detail.js, catalog.js, and a local album folder named 画册 with subfolders as categories and images.
+
+Fix precisely these issues:
+1) Detail page must display the EXACT product image passed from index via query param "img" (relative path like 画册/<分类>/<文件>.<ext>). Index must pass the raw src attribute value using getAttribute("src"). Detail must read it and set mainImage.src exactly to that value.
+2) If the product has only ONE image in its category, hide indicators, disable timers, and DO NOT auto-rotate. No fake carousel.
+3) If there are multiple images in the same category, allow manual switching via indicators only; DO NOT auto-rotate by default.
+4) Remove placeholder/remote demo content in detail.html/detail.js: no Unsplash URLs, no hardcoded title/price. Title should come from the passed name (fallback to filename). The lower detail-images section should use local images from the same category (exclude duplicates) if available.
+5) On the index page, ensure clicking a product card builds the detail URL using the image element's getAttribute('src') (relative path), not the resolved absolute URL. Ensure categories with images appear first in the sidebar; empty categories come last.
+6) Banner: keep current behavior or use local images only; do NOT add external URLs. Priority is the detail page correctness and removing fake rotation.
+
+Acceptance criteria:
+- From index: clicking any product opens the detail page with that exact image as the main image.
+- Single-image products: no indicators shown and no rotation.
+- Multi-image categories: indicators exist and manual click switches images; no auto-rotation.
+- No external Unsplash image URLs remain in detail.html/detail.js.
+
+Tasks:
+- Audit current code, patch files, and ensure the above acceptance criteria pass.
+- Keep code simple and robust. Avoid relying on browser-normalized absolute URLs.
+- After changes, output a concise summary listing files changed and what was fixed.

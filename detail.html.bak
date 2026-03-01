@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>产品详情页</title>
     <link rel="stylesheet" href="detail.css">
-    <script src="catalog.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -28,42 +27,57 @@
         <!-- 产品图片轮播 -->
         <div class="product-gallery">
             <div class="gallery-main">
-                <img id="mainImage" src="" alt="产品主图">
+                <img id="mainImage" src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=600&h=600&fit=crop" alt="产品主图">
             </div>
-            <div class="gallery-indicators"></div>
+            <div class="gallery-indicators">
+                <span class="indicator active"></span>
+                <span class="indicator"></span>
+                <span class="indicator"></span>
+            </div>
         </div>
 
         <!-- 产品信息 -->
         <div class="product-detail">
-            <h2 class="product-title"></h2>
+            <h2 class="product-title">中粮 可益康蛋白粉礼盒500g*2</h2>
+            <div class="product-price-bar">
+                <span class="price-symbol">¥:</span>
+                <span class="price-value">328.00</span>
+            </div>
             
             <div class="product-meta">
                 <div class="meta-item">
                     <span class="meta-label">品牌</span>
-                    <span class="meta-value">OEM/ODM定制</span>
+                    <span class="meta-value">中粮</span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">规格</span>
-                    <span class="meta-value">尺寸可定制</span>
+                    <span class="meta-value">500g*2</span>
                 </div>
                 <div class="meta-item">
                     <span class="meta-label">产地</span>
-                    <span class="meta-value">中国广东</span>
+                    <span class="meta-value">中国</span>
                 </div>
             </div>
 
             <div class="product-description">
                 <h3 class="section-title">产品详情</h3>
                 <div class="description-content">
-                    <p>专业化妆品包装解决方案，支持OEM/ODM定制服务。</p>
-                    <p>• 精选优质原材料，品质可靠</p>
-                    <p>• 精密制造工艺，细节考究</p>
-                    <p>• 支持个性化定制，满足品牌需求</p>
-                    <p>• 适用于各类彩妆产品包装</p>
+                    <p>中粮可益康蛋白粉，精选优质乳清蛋白和大豆蛋白，科学配比，营养丰富。</p>
+                    <p>• 优质双蛋白配方，营养更均衡</p>
+                    <p>• 易溶解，口感细腻</p>
+                    <p>• 独立包装，方便携带</p>
+                    <p>• 适合全家人日常营养补充</p>
                 </div>
             </div>
 
-
+            <div class="product-images">
+                <h3 class="section-title">图文详情</h3>
+                <div class="detail-images">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800&h=800&fit=crop" alt="产品详情图1">
+                    <img src="https://images.unsplash.com/photo-1516684732162-798a0062be99?w=800&h=800&fit=crop" alt="产品详情图2">
+                    <img src="https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f?w=800&h=800&fit=crop" alt="产品详情图3">
+                </div>
+            </div>
         </div>
 
         <!-- 底部占位 -->

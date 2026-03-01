@@ -8,7 +8,8 @@
 
 :root {
     --primary-red: #E60012;
-    --primary-blue: #3A8ABD;
+    --primary-green: #07C160;
+    --primary-green-dark: #06AD56;
     --text-dark: #333333;
     --text-gray: #666666;
     --text-light: #999999;
@@ -120,7 +121,7 @@ body {
 }
 
 .indicator.active {
-    background-color: var(--primary-blue);
+    background-color: var(--primary-green);
     width: 20px;
     border-radius: 4px;
 }
@@ -199,7 +200,7 @@ body {
     color: var(--text-dark);
     margin-bottom: 12px;
     padding-left: 12px;
-    border-left: 4px solid var(--primary-blue);
+    border-left: 4px solid var(--primary-green);
 }
 
 .description-content {
@@ -274,7 +275,7 @@ body {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background-color: rgba(230, 0, 18, 0.6);
+    background-color: rgba(7, 193, 96, 0.6);
     color: #fff;
     border: none;
     cursor: pointer;
@@ -292,7 +293,7 @@ body {
 }
 
 .back-to-home:hover {
-    background-color: rgba(230, 0, 18, 0.8);
+    background-color: rgba(7, 193, 96, 0.8);
     transform: translateY(-2px);
 }
 
