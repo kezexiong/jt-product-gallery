@@ -1,41 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>佳图系列JT-02产品图册</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="catalog.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="app">
-        <!-- Banner 区域 -->
-        <div class="banner-section">
-            <div class="banner-static">
-                <img src="banner.png" alt="产品 Banner" class="banner-img">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>佳图系列JT-02产品图册</title>
+        <link rel="stylesheet" href="styles.css" />
+        <script src="catalog.js"></script>
+        <!-- Google Fonts removed to avoid slow external font loading -->
+    </head>
+    <body>
+        <div class="app">
+            <!-- Banner 区域 -->
+            <div class="banner-section">
+                <div class="banner-static">
+                    <img
+                        src="banner.png"
+                        alt="产品 Banner"
+                        class="banner-img"
+                    />
+                </div>
+            </div>
+
+            <!-- 主内容区域 -->
+            <div class="main-container">
+                <!-- 左侧分类导航 -->
+                <aside class="sidebar">
+                    <nav class="category-nav">
+                        <ul class="category-list"></ul>
+                    </nav>
+                </aside>
+
+                <!-- 产品展示区域 -->
+                <main class="content">
+                    <div class="products-grid"></div>
+                </main>
             </div>
         </div>
 
-        <!-- 主内容区域 -->
-        <div class="main-container">
-            <!-- 左侧分类导航 -->
-            <aside class="sidebar">
-                <nav class="category-nav">
-                    <ul class="category-list"></ul>
-                </nav>
-            </aside>
-
-            <!-- 产品展示区域 -->
-            <main class="content">
-                <div class="products-grid">
-                </div>
-            </main>
-        </div>
-
-
-    </div>
-
-    <script src="script.js"></script>
-</body>
+        <script src="script.js"></script>
+    </body>
 </html>
