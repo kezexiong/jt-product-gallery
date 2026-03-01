@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.CATALOG && typeof window.CATALOG === "object" ? window.CATALOG : {};
 
   // 每批渲染数量（根据你想要的“首屏速度 vs 滚动频率”调整：12/18/24）
-  const PAGE_SIZE = 12;
+  const PAGE_SIZE = 8;
 
   // 占位图（非透明），避免移动端“看起来像空白没加载”
   const PLACEHOLDER_SRC =
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 移动端体验优化：切换分类后，立刻加载可视区附近的前几张图，避免“空白占位”
-  function eagerLoadVisibleImages({ limit = 6, margin = 280 } = {}) {
+  function eagerLoadVisibleImages({ limit = 8, margin = 280 } = {}) {
     const candidates = Array.from(
       productsGrid.querySelectorAll("img[data-src]"),
     );
@@ -66,6 +66,46 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const img of visible) {
       if (loaded >= limit) break;
       if (loadRealImage(img, { priority: "high" })) loaded += 1;
+    }
+  }
+
+  // 连续预取（不渲染）：提前把“接下来一段”的图片请求发出去，滑动/切换时更快出图
+  const PREFETCH_AHEAD_COUNT = PAGE_SIZE * 2; // 预取 2 页（16 张）
+  const PREFETCH_IDLE_TIMEOUT_MS = 1200;
+  const prefetchedSrc = new Set();
+
+  function prefetchUpcomingImages() {
+    const total = state.products.length;
+    if (!total) return;
+
+    // 目标：保持在“已渲染末尾”之后预取一段
+    const start = state.renderedCount;
+    const end = Math.min(total, start + PREFETCH_AHEAD_COUNT);
+
+    for (let i = start; i < end; i += 1) {
+      const src = state.products[i]?.img;
+      if (!src || prefetchedSrc.has(src)) continue;
+
+      prefetchedSrc.add(src);
+
+      // 触发浏览器预取（命中缓存后，真正显示时会更快）
+      const img = new Image();
+      img.decoding = "async";
+      img.src = src;
+    }
+  }
+
+  function schedulePrefetchUpcoming() {
+    // 不在加载中/不在结束状态下预取
+    if (state.loading || state.done) return;
+
+    // 尽量在空闲时预取，避免抢占首屏渲染
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(prefetchUpcomingImages, {
+        timeout: PREFETCH_IDLE_TIMEOUT_MS,
+      });
+    } else {
+      setTimeout(prefetchUpcomingImages, 120);
     }
   }
 
@@ -261,7 +301,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setupLazyLoad(productsGrid);
 
     // 体验优化：首屏/当前可见范围立即拉取几张，避免切换分类时出现“空白没加载”的感觉
-    eagerLoadVisibleImages({ limit: 6 });
+    eagerLoadVisibleImages({ limit: 8 });
+
+    // 连续预取下一段（不渲染）：让你继续滑动时更顺
+    schedulePrefetchUpcoming();
 
     state.loading = false;
 
@@ -275,6 +318,9 @@ document.addEventListener("DOMContentLoaded", () => {
     state.renderedCount = 0;
     state.loading = false;
     state.done = false;
+
+    // 切换分类时清理预取记录，避免无意义占用
+    prefetchedSrc.clear();
   }
 
   function switchCategory(categoryName) {
