@@ -228,12 +228,11 @@ body {
     opacity: 0.85;
 }
 
-/* 支持 :has() 的浏览器：当真实图片 src 生效后，停止 shimmer */
-@supports selector(.product-image:has(img)) {
-    .product-image:has(img[src]:not([src^="data:"]))::before {
-        animation: none;
-        opacity: 0;
-    }
+/* 图片加载完成后（由 JS 给 .product-image 加上 is-loaded 类），停止 shimmer（兼容更多移动端浏览器） */
+.product-image.is-loaded::before {
+    animation: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
 }
 
 .product-image img {

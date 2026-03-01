@@ -27,6 +27,36 @@ document.addEventListener("DOMContentLoaded", () => {
   // 进入视口前提前加载的距离（越大越“预加载”，越小越省流量）
   const PREFETCH_ROOT_MARGIN = "900px 0px";
 
+  // 预取（prefetch）会与首屏资源抢带宽：在移动端优先保证 banner 和首屏图片先出来
+  let bannerLoaded = false;
+  let resolveBannerReady = null;
+  const bannerReady = new Promise((resolve) => {
+    resolveBannerReady = resolve;
+  });
+
+  function markBannerReady() {
+    if (bannerLoaded) return;
+    bannerLoaded = true;
+    if (typeof resolveBannerReady === "function") resolveBannerReady();
+  }
+
+  function initBannerGate() {
+    const banner = document.querySelector(".banner-img");
+    if (!banner) {
+      markBannerReady();
+      return;
+    }
+
+    // banner 已经在缓存里
+    if (banner.complete && banner.naturalWidth > 0) {
+      markBannerReady();
+      return;
+    }
+
+    banner.addEventListener("load", markBannerReady, { once: true });
+    banner.addEventListener("error", markBannerReady, { once: true });
+  }
+
   function loadRealImage(img, { priority = "auto" } = {}) {
     if (!img) return false;
     const realSrc = img?.dataset?.src;
@@ -41,8 +71,40 @@ document.addEventListener("DOMContentLoaded", () => {
       img.setAttribute("loading", "eager");
     }
 
+    // 关键：不要因为 src 变成真实地址就立刻“显出来”
+    // 在移动端网络抖动时会出现“空白/灰块停住”的观感。
+    // 这里确保：图片真正 onload 后再显示（骨架屏在此期间可见）。
+    img.style.opacity = "0";
+    img.style.filter = "blur(10px)";
+    img.style.transform = "scale(1.02)";
+
+    const markLoaded = () => {
+      img.dataset.loaded = "1";
+      img.style.opacity = "1";
+      img.style.filter = "blur(0)";
+      img.style.transform = "scale(1)";
+    };
+
+    img.addEventListener("load", markLoaded, { once: true });
+    img.addEventListener(
+      "error",
+      () => {
+        // 出错时也别卡住骨架：至少把占位图展示出来
+        img.style.opacity = "1";
+        img.style.filter = "none";
+        img.style.transform = "none";
+      },
+      { once: true },
+    );
+
     img.src = realSrc;
     img.removeAttribute("data-src");
+
+    // 命中缓存时，load 事件可能已经结束：补一次立即标记
+    if (img.complete && img.naturalWidth > 0) {
+      markLoaded();
+    }
+
     return true;
   }
 
@@ -73,8 +135,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const PREFETCH_AHEAD_COUNT = PAGE_SIZE * 2; // 预取 2 页（16 张）
   const PREFETCH_IDLE_TIMEOUT_MS = 1200;
   const prefetchedSrc = new Set();
+  let prefetchPending = false;
 
   function prefetchUpcomingImages() {
+    // banner 未就绪时不预取，避免与首屏资源抢带宽
+    if (!bannerLoaded) return;
+
     const total = state.products.length;
     if (!total) return;
 
@@ -98,6 +164,20 @@ document.addEventListener("DOMContentLoaded", () => {
   function schedulePrefetchUpcoming() {
     // 不在加载中/不在结束状态下预取
     if (state.loading || state.done) return;
+
+    // 页面在后台时不抢资源
+    if (document.visibilityState === "hidden") return;
+
+    // banner 未加载完之前，先别预取，避免移动端首屏被拖慢
+    if (!bannerLoaded) {
+      if (prefetchPending) return;
+      prefetchPending = true;
+      bannerReady.then(() => {
+        prefetchPending = false;
+        schedulePrefetchUpcoming();
+      });
+      return;
+    }
 
     // 尽量在空闲时预取，避免抢占首屏渲染
     if (typeof requestIdleCallback === "function") {
@@ -425,6 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 初始化
   // -------------------------
   renderCategoryList();
+  initBannerGate();
 
   // 默认：优先第一个“有图分类”，否则第一个分类
   const defaultCategory =
