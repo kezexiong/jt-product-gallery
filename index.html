@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>佳图系列JT-02产品图册</title>
         <link rel="stylesheet" href="styles.css" />
+        <link rel="preload" as="image" href="banner.png" fetchpriority="high" />
         <script src="catalog.js"></script>
         <!-- Google Fonts removed to avoid slow external font loading -->
     </head>
@@ -17,6 +18,9 @@
                         src="banner.png"
                         alt="产品 Banner"
                         class="banner-img"
+                        loading="eager"
+                        decoding="async"
+                        fetchpriority="high"
                     />
                 </div>
             </div>

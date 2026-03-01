@@ -20,12 +20,54 @@ document.addEventListener("DOMContentLoaded", () => {
   // 每批渲染数量（根据你想要的“首屏速度 vs 滚动频率”调整：12/18/24）
   const PAGE_SIZE = 12;
 
-  // 1x1 占位，避免空 src 出现破图图标
+  // 占位图（非透明），避免移动端“看起来像空白没加载”
   const PLACEHOLDER_SRC =
-    "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='24'%20height='24'%3E%3Crect%20width='24'%20height='24'%20fill='%23f2f2f2'/%3E%3C/svg%3E";
 
   // 进入视口前提前加载的距离（越大越“预加载”，越小越省流量）
   const PREFETCH_ROOT_MARGIN = "900px 0px";
+
+  function loadRealImage(img, { priority = "auto" } = {}) {
+    if (!img) return false;
+    const realSrc = img?.dataset?.src;
+    if (!realSrc) return false;
+
+    if (priority === "high" || priority === "low" || priority === "auto") {
+      img.setAttribute("fetchpriority", priority);
+    }
+
+    // 优先加载时，提示浏览器可以更积极一点
+    if (priority === "high") {
+      img.setAttribute("loading", "eager");
+    }
+
+    img.src = realSrc;
+    img.removeAttribute("data-src");
+    return true;
+  }
+
+  // 移动端体验优化：切换分类后，立刻加载可视区附近的前几张图，避免“空白占位”
+  function eagerLoadVisibleImages({ limit = 6, margin = 280 } = {}) {
+    const candidates = Array.from(
+      productsGrid.querySelectorAll("img[data-src]"),
+    );
+    if (!candidates.length) return;
+
+    const topBound = -margin;
+    const bottomBound = window.innerHeight + margin;
+
+    const visible = candidates
+      .map((img) => ({ img, rect: img.getBoundingClientRect() }))
+      .filter(({ rect }) => rect.bottom > topBound && rect.top < bottomBound)
+      .sort((a, b) => a.rect.top - b.rect.top)
+      .map(({ img }) => img);
+
+    let loaded = 0;
+    for (const img of visible) {
+      if (loaded >= limit) break;
+      if (loadRealImage(img, { priority: "high" })) loaded += 1;
+    }
+  }
 
   function normalizeLocalImagePath(path) {
     if (!path) return "";
@@ -107,11 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
           const img = entry.target;
-          const realSrc = img?.dataset?.src;
-          if (realSrc) {
-            img.src = realSrc;
-            img.removeAttribute("data-src");
-          }
+          loadRealImage(img);
           obs.unobserve(img);
         }
       },
@@ -129,11 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!obs) {
       // 不支持 IntersectionObserver：直接加载
       imgs.forEach((img) => {
-        const realSrc = img?.dataset?.src;
-        if (realSrc) {
-          img.src = realSrc;
-          img.removeAttribute("data-src");
-        }
+        loadRealImage(img);
       });
       return;
     }
@@ -225,6 +259,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 对新增图片挂懒加载
     setupLazyLoad(productsGrid);
+
+    // 体验优化：首屏/当前可见范围立即拉取几张，避免切换分类时出现“空白没加载”的感觉
+    eagerLoadVisibleImages({ limit: 6 });
 
     state.loading = false;
 
